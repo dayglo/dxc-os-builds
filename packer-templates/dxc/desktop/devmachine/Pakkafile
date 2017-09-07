@@ -1,0 +1,21 @@
+{
+	"templates":{
+		"vcenter-delta.json" :{
+			"vars": {
+				"vcenter-inputTemplate":"DXC-WINDOWS10-TEMPLATE",
+				"vcenter-outputTemplate":"DXC-WINDOWS10-DEVMACHINE-TEMPLATE",}
+		}
+	},
+	"includes": {
+		"provisioners": [{
+			"type" : "ansible",
+			"playbook_file": "./main.yml",
+			"extra_arguments": [
+				"-vvv",
+				"--connection" , "packer",
+				"--extra-vars" , "ansible_shell_type=powershell ansible_shell_executable=None"
+			]
+		}]
+	}
+}
+
