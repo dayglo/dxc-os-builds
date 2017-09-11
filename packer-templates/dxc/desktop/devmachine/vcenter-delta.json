@@ -6,17 +6,18 @@
     "vcenter-datastore": "",
     "vcenter-username": "",
     "vcenter-password": "",
-    "vcenter-vm_name": "DXC-BUILDDEV-V1.0",
     "vcenter-disk_mode": "",
     "vcenter-vm_folder": "",
     "vcenter-vm_network": "",
-    "vcenter-insecure" : "false",
-    "guest-password" : "vagrant"
+    "vcenter-insecure" : "false"
   },
   "builders": [
     {
       "type": "vsphere",
-
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "2h",
       "vcenter_server": "{{ user `vcenter-host` }}",
       "username": "{{ user `vcenter-username` }}",
       "password": "{{ user `vcenter-password` }}",
@@ -32,7 +33,7 @@
 
       "ssh_username": "vagrant",
       "ssh_password": "{{user `guest_password`}}",
-      "shutdown_command": "echo '{{user `guest_password`}}' | sudo -S shutdown -P now",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "5m",
 
       "CPUs": 2,

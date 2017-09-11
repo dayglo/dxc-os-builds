@@ -1,15 +1,21 @@
 {
 	"templates":{
 		"vcenter-delta.json" :{
+			"varfiles" : [
+				"../../../../vcenter-creds.json",
+				"../../../../linux-variables.json"
+			],
 			"vars": {
 				"vcenter-inputTemplate":"DXC-WINDOWS10-TEMPLATE",
-				"vcenter-outputTemplate":"DXC-WINDOWS10-DEVMACHINE-TEMPLATE",}
+				"vcenter-outputTemplate":"DXC-WINDOWS10-DEVMACHINE-TEMPLATE",
+				"ansible-playbook" : "./main.yml"
+			}
 		}
 	},
 	"includes": {
 		"provisioners": [{
 			"type" : "ansible",
-			"playbook_file": "./main.yml",
+			"playbook_file": "{{ user `ansible-playbook` }}",
 			"extra_arguments": [
 				"-vvv",
 				"--connection" , "packer",
@@ -18,4 +24,3 @@
 		}]
 	}
 }
-
