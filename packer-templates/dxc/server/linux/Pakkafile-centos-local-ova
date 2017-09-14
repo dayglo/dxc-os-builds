@@ -1,0 +1,31 @@
+{
+    "templates":{
+        "centos-7.3-x86_64.json" :{
+            "include": "vcenter-local-ova",
+            "varfiles" : [],
+            "repo": "https://github.com/dayglo/packer-templates",
+            "only": "vmware-iso",
+            "jsonpath" : {
+                "builders[?(@.type=='vmware-iso')].boot_wait" : "20s"
+            }
+        }
+    },
+    "includes": {
+        "vcenter-local-ova":{
+            "post-processors" : [
+                {
+                    "inline": [
+                        "ovftool output-centos-7.3-x86_64-vmware-iso/packer-centos-7.3-x86_64.vmx centos-7.3-x86_64.ova"
+                    ],
+                    "type": "shell-local"
+                },
+                {
+                    "files": [
+                        "centos-7.3-x86_64.ova"
+                    ],
+                    "type": "artifice"
+                }
+            ]
+        }
+    }
+}
