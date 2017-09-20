@@ -1,0 +1,35 @@
+{
+    "templates":{
+        "rhel-7.4-vmware.json" :{
+            "include": "vcenter-local-ova",
+            "varfiles" : [],
+            "repo": "https://github.com/nucleuspoc/packer-rhel7-vms.git",
+            "vars" : {
+                "iso_url" : "file:///C:/Users/hoppert/isos/rhel-server-7.4.iso"
+            },            
+            "only": "vmware-iso",
+            "jsonpath" : {
+		"builders[?(@.type=='vmware-iso')].headless": false,
+                "builders[?(@.type=='vmware-iso')].boot_wait" : "10s"
+            }
+        }
+    },
+    "includes": {
+        "vcenter-local-ova":{
+            "post-processors" : [
+                {
+                    "inline": [
+                        "ovftool output-vmware-iso/rhel-7.4-vmware.vmx rhel-7.4-vmware.ova"
+                    ],
+                    "type": "shell-local"
+                },
+                {
+                    "files": [
+                        "rhel-7.4-vmware.ova"
+                    ],
+                    "type": "artifice"
+                }
+            ]
+        }
+    }
+}
