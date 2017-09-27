@@ -3,7 +3,7 @@
         "windows_2016.json" :{
             "include": "vcenter-local-ova" ,
              "varfiles" : [
-                "../../../../vcenter-creds.json",
+                "../../../../vcenter-creds.json"
             ],
             "vars" : {
                 "vcenter-vm_name": "DXC-WIN2016-TEMPLATE"
