@@ -24,7 +24,7 @@
                 "vcenter-disk_mode": "",
                 "vcenter-vm_folder": "/platform/templates/",
                 "vcenter-vm_network": "",
-                "vcenter-insecure" : ""
+                "vcenter-insecure" : "true"
             },
             "post-processors": [
                 {
@@ -41,18 +41,6 @@
                     "vm_folder": "{{ user `vcenter-vm_folder` }}",
                     "vm_network": "{{ user `vcenter-vm_network` }}",
                     "insecure": "{{ user `vcenter-insecure` }}"
-                },
-                {
-                    "inline": [
-                        "ovftool output-windows_2016-vmware-iso/windows_2016.vmx windows_2016.ova"
-                    ],
-                    "type": "shell-local"
-                },
-                {
-                    "files": [
-                        "windows_2016.ova"
-                    ],
-                    "type": "artifice"
                 }
             ]
         },
