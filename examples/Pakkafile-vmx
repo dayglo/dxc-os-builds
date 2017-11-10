@@ -1,0 +1,27 @@
+---
+templates:
+  test.json:
+    include:
+      builders:
+      - vmx-builder
+    only: vmware-vmx
+    repo: http://github.com/dayglo/vmxtest
+    jsonpath:
+      builders[?(@.type=='vmware-iso')].boot_wait: 10s
+fragments:
+  vmx-builder:
+    - type: vmware-vmx
+      source_path: C:\Users\gee\Documents\artifacts\vmx\rhel74\rhel-7.4-vmware.vmx
+      headless: true
+      ssh_username: vagrant
+      ssh_password: vagrant
+      shutdown_command: sudo systemctl poweroff
+      vnc_port_min: 5900
+      vnc_port_max: 5980
+      floppy_files: []
+      vmx_data:
+        RemoteDisplay.vnc.enabled: 'false'
+        RemoteDisplay.vnc.port: '5900'
+        memsize: '6000'
+        numvcpus: '2'
+        scsi0.virtualDev: lsisas1068
