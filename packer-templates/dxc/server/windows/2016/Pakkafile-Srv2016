@@ -1,64 +1,48 @@
-{
-    "templates":{
-        "windows_2016.json" :{
-            "include": "vcenter-upload" ,
-            "vars" : {
-                "vcenter-vm_name": "DXC-WIN2016-BASE"
-            },
-            "repo": "https://github.com/dayglo/packer-windows",
-            "only": "vmware-iso",
-            "jsonpath" : {
-                "builders[?(@.type=='vmware-iso')].boot_wait" : "20s"
-            }
-        }
-    },
-    "includes": {
-        "vcenter-upload" : {
-            "variables": {   
-                "vcenter-host": "",
-                "vcenter-cluster": "",
-                "vcenter-datacenter": "",
-                "vcenter-datastore": "",
-                "vcenter-username": "",
-                "vcenter-password": "",
-                "vcenter-disk_mode": "",
-                "vcenter-vm_folder": "/platform/templates/",
-                "vcenter-vm_network": "",
-                "vcenter-insecure" : "true"
-            },
-            "post-processors": [
-                {
-                    "type": "vsphere",
-                    "only": ["vmware-iso"],
-                    "host": "{{ user `vcenter-host` }}",
-                    "cluster": "{{ user `vcenter-cluster` }}",
-                    "datacenter": "{{ user `vcenter-datacenter` }}",
-                    "datastore": "{{ user `vcenter-datastore` }}",
-                    "username": "{{ user `vcenter-username` }}",
-                    "password": "{{ user `vcenter-password` }}",
-                    "vm_name": "{{ user `vcenter-vm_name` }}",
-                    "disk_mode": "{{ user `vcenter-disk_mode` }}",
-                    "vm_folder": "{{ user `vcenter-vm_folder` }}",
-                    "vm_network": "{{ user `vcenter-vm_network` }}",
-                    "insecure": "{{ user `vcenter-insecure` }}"
-                }
-            ]
-        },
-        "vcenter-local-ova":{
-            "post-processors" : [
-                {
-                    "inline": [
-                        "ovftool output-windows_2016-vmware-iso/windows_2016.vmx windows_2016.ova"
-                    ],
-                    "type": "shell-local"
-                },
-                {
-                    "files": [
-                        "windows_2016.ova"
-                    ],
-                    "type": "artifice"
-                }
-            ]
-        }
-    }
-}
+---
+templates:
+  windows_2016.json:
+    include:
+      variables:
+      - vcenter-upload-vars
+    replace:
+      post-processors:
+      - vcenter-upload-post-processor
+    vars:
+      vcenter-vm_name: DXC-WIN2016-BASE
+    repo: https://github.com/dayglo/packer-windows
+    only: vmware-iso
+    jsonpath:
+      builders[?(@.type=='vmware-iso')].boot_wait: 20s
+fragments:
+  vcenter-upload-vars:
+    vcenter-host: ''
+    vcenter-cluster: ''
+    vcenter-datacenter: ''
+    vcenter-datastore: ''
+    vcenter-username: ''
+    vcenter-password: ''
+    vcenter-disk_mode: ''
+    vcenter-vm_folder: "/platform/templates/"
+    vcenter-vm_network: ''
+  vcenter-upload-post-processor:
+    type: vsphere
+    only:
+    - vmware-iso
+    host: "{{ user `vcenter-host` }}"
+    cluster: "{{ user `vcenter-cluster` }}"
+    datacenter: "{{ user `vcenter-datacenter` }}"
+    datastore: "{{ user `vcenter-datastore` }}"
+    username: "{{ user `vcenter-username` }}"
+    password: "{{ user `vcenter-password` }}"
+    vm_name: "{{ user `vcenter-vm_name` }}"
+    disk_mode: "{{ user `vcenter-disk_mode` }}"
+    vm_folder: "{{ user `vcenter-vm_folder` }}"
+    vm_network: "{{ user `vcenter-vm_network` }}"
+    insecure: "{{ user `vcenter-insecure` }}"
+  ova-post-processors:
+  - inline:
+    - ovftool output-windows_2016-vmware-iso/windows_2016.vmx windows_2016.ova
+    type: shell-local
+  - files:
+    - windows_2016.ova
+    type: artifice
