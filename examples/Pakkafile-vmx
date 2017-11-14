@@ -1,9 +1,16 @@
 ---
 templates:
   test.json:
+    vars:
+        vm_name: rhel74
+        output_directory: output
     include:
+      variables:
+       - uservariables
       builders:
-      - vmx-builder
+        - vmx-builder
+      post-processors:
+        - local-ova-postproc
     only: vmware-vmx
     repo: http://github.com/dayglo/vmxtest
     jsonpath:
@@ -12,16 +19,29 @@ fragments:
   vmx-builder:
     - type: vmware-vmx
       source_path: C:\Users\gee\Documents\artifacts\vmx\rhel74\rhel-7.4-vmware.vmx
-      headless: true
+      headless: false
       ssh_username: vagrant
       ssh_password: vagrant
-      shutdown_command: sudo systemctl poweroff
+      shutdown_command: echo 'vagrant' | sudo -S /sbin/halt -h -p
       vnc_port_min: 5900
       vnc_port_max: 5980
       floppy_files: []
+      output_directory: outputvmx
+      vm_name: "{{user `vm_name`}}"
       vmx_data:
         RemoteDisplay.vnc.enabled: 'false'
         RemoteDisplay.vnc.port: '5900'
         memsize: '6000'
         numvcpus: '2'
-        scsi0.virtualDev: lsisas1068
+        ethernet0.virtualDev: vmxnet3
+        virtualHW.version: "11"
+  local-ova-postproc:
+    - inline:
+      - ovftool outputvmx/{{user `vm_name`}}.vmx {{user `vm_name`}}.ova
+      type: shell-local
+    - files:
+      - "{{user `vm_name`}}.ova"
+      type: artifice
+  uservariables:
+    vm_name: "{{user `vm_name`}}"
+
