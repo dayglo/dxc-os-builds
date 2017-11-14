@@ -2,11 +2,9 @@
 templates:
   windows_2016.json:
     include:
-      variables:
-      - vcenter-upload-vars
     replace:
       post-processors:
-      - vcenter-upload-post-processor
+      - ova-post-processors
     vars:
       vcenter-vm_name: DXC-WIN2016-BASE
     repo: https://github.com/dayglo/packer-windows
