@@ -1,0 +1,31 @@
+{
+    "templates":{
+        "ubuntu-16.04-amd64.json" :{
+            "include": "vcenter-local-ova",
+            "varfiles" : [],
+            "repo": "https://github.com/dayglo/packer-templates",
+            "only": "vmware-iso",
+            "jsonpath" : {
+                "builders[?(@.type=='vmware-iso')].boot_wait" : "20s"
+            }
+        }
+    },
+    "includes": {
+        "vcenter-local-ova":{
+            "post-processors" : [
+                {
+                    "inline": [
+                        "ovftool output-ubuntu-16.04-amd64-vmware-iso/packer-ubuntu-16.04-amd64.vmx ubuntu-16.04-amd64.ova"
+                    ],
+                    "type": "shell-local"
+                },
+                {
+                    "files": [
+                        "ubuntu-16.04-amd64.ova"
+                    ],
+                    "type": "artifice"
+                }
+            ]
+        }
+    }
+}
