@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  vars:
+    teamcity_agent_server_url: 10.0.4.163
+    teamcity_server_user_passwd: Cr4mpulations
+  roles:
+    - ansible-role-dxc-build-agent
