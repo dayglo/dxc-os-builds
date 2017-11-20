@@ -1,6 +1,15 @@
 ---
+templates:
+  {}:
+    include: 
+      variables:
+        - variables1
+      builders:
+        - builders1
+      provisioners:
+        - provisioners1
 fragments:
-  variables:
+  variables1:
     vcenter-host: ''
     vcenter-cluster: ''
     vcenter-datacenter: ''
@@ -13,7 +22,7 @@ fragments:
     vcenter-vm_network: ''
     vcenter-insecure: 'false'
     guest-password: vagrant
-  builders:
+  builders1:
   - type: vsphere
     vcenter_server: "{{ user `vcenter-host` }}"
     username: "{{ user `vcenter-username` }}"
@@ -32,6 +41,6 @@ fragments:
     CPUs: 2
     RAM: 4096
     convert_to_template: true
-  provisioners:
+  provisioners1:
   - type: ansible
     playbook_file: ./main.yml
