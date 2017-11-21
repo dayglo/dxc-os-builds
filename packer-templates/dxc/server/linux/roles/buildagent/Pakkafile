@@ -21,7 +21,7 @@ fragments:
     insecure_connection: "true"
     datacenter: "{{ user `vcenter-datacenter` }}"
     template:  "{{ user `vcenter-inputTemplate` }}"
-    vm_name: "{{ user `vcenter-outputTemplate` }}-{{isotime \"2006-01-02_15:04:05\"}}-{{user `tag`}}"
+    vm_name: "{{ user `vcenter-outputTemplate` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}"
     host: "{{ user `vcenter-cluster` }}"
     linked_clone: false
     datastore: "{{ user `vcenter-datastore` }}"
