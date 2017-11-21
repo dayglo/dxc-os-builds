@@ -12,6 +12,7 @@ fragments:
   variables1:
     vcenter-insecure: "true"
     guest_password: vagrant
+    git_sha : 'untagged'
   builders1:
     type: vsphere
     vcenter_server: "{{ user `vcenter-host` }}"
@@ -20,7 +21,7 @@ fragments:
     insecure_connection: "true"
     datacenter: "{{ user `vcenter-datacenter` }}"
     template:  "{{ user `vcenter-inputTemplate` }}"
-    vm_name: "{{ user `vcenter-outputTemplate` }}-{{isotime \"2006-01-02_15:04:05\"}}"
+    vm_name: "{{ user `vcenter-outputTemplate` }}-{{isotime \"2006-01-02_15:04:05\"}}-{{user `git_sha`}}"
     host: "{{ user `vcenter-cluster` }}"
     linked_clone: false
     datastore: "{{ user `vcenter-datastore` }}"
