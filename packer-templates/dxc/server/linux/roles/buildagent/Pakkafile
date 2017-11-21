@@ -31,8 +31,8 @@ fragments:
     password: "{{ user `vcenter-password` }}"
     insecure_connection: "{{ user `vcenter-insecure` }}"
     datacenter: "{{ user `vcenter-datacenter` }}"
-    template: "{{ user `vcenter-outputTemplate` }}"
-    vm_name: "{{ user `vcenter-vm_name` }}"
+    template: "{{ user `vcenter-inputTemplate` }}"
+    vm_name: "{{ user `vcenter-outputTemplate` }}"
     host: "{{ user `vcenter-cluster` }}"
     linked_clone: false
     datastore: "{{ user `vcenter-datastore` }}"
