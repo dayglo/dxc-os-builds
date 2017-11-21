@@ -6,7 +6,7 @@ templates:
       builders: builders1
       provisioners: provisioners1
     vars:
-      vcenter-inputTemplate: DXC-RHEL74-TEMPLATE-001
+      vcenter-inputTemplate: DXC-CENTOS7.3-TEMPLATE
       vcenter-outputTemplate: DXC-TCBUILDAGENT
 fragments:
   variables1:
