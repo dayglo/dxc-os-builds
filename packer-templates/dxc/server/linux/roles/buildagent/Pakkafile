@@ -4,6 +4,7 @@ templates:
     replace: 
       variables: variables1
       builders: builders1
+      provisioners: provisioners1
     vars:
       vcenter-inputTemplate: DXC-RHEL74-TEMPLATE-001
       vcenter-outputTemplate: DXC-TCBUILDAGENT
