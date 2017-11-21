@@ -27,6 +27,7 @@ fragments:
     vcenter-vm_folder: ''
     vcenter-vm_network: ''
     vcenter-insecure: ''
+    tag: 'untagged'
   vcenter-upload-post-processors:
   - type: vsphere
     only:
@@ -37,7 +38,7 @@ fragments:
     datastore: "{{ user `vcenter-datastore` }}"
     username: "{{ user `vcenter-username` }}"
     password: "{{ user `vcenter-password` }}"
-    vm_name: "{{ user `vcenter-vm_name` }}"
+    vm_name: "{{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}"
     disk_mode: "{{ user `vcenter-disk_mode` }}"
     vm_folder: "{{ user `vcenter-vm_folder` }}"
     vm_network: "{{ user `vcenter-vm_network` }}"
