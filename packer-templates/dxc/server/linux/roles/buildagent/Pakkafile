@@ -10,7 +10,7 @@ templates:
 fragments:
   variables1:
     vcenter-insecure: "true"
-    guest-password: vagrant
+    guest_password: vagrant
   builders1:
     type: vsphere
     vcenter_server: "{{ user `vcenter-host` }}"
@@ -18,7 +18,7 @@ fragments:
     password: "{{ user `vcenter-password` }}"
     insecure_connection: "true"
     datacenter: "{{ user `vcenter-datacenter` }}"
-    template: "DXC-RHEL74-TEMPLATE-001"
+    template:  "{{ user `vcenter-inputTemplate` }}"
     vm_name: "{{ user `vcenter-outputTemplate` }}-{{timestamp}}"
     host: "{{ user `vcenter-cluster` }}"
     linked_clone: false
