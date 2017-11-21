@@ -6,7 +6,7 @@ templates:
       builders: builders1
       provisioners: provisioners1
     vars:
-      vcenter-inputTemplate: DXC-UBUNTU16.04-TEMPLATE
+      vcenter-inputTemplate: DXC-UBUNTU16.04-KUBERNETES
       vcenter-outputTemplate: DXC-TCBUILDAGENT
 fragments:
   variables1:
