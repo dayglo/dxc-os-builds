@@ -32,5 +32,5 @@ fragments:
     RAM: 4096
     convert_to_template: true
   provisioners1:
-  - type: ansible
+    type: ansible
     playbook_file: ./main.yml
