@@ -33,4 +33,4 @@ fragments:
     convert_to_template: true
   provisioners1:
     type: ansible
-    playbook_file: ./main.yml
+    playbook_file: ./main.yaml
