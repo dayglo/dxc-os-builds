@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: default
   become: true
   vars:
     teamcity_agent_server_url: 10.0.4.163
