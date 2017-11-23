@@ -7,7 +7,7 @@ templates:
       provisioners: provisioners1
     vars:
       vcenter-inputTemplate: DXC-UBUNTU16.04-KUBERNETES
-      vcenter-outputTemplate: DXC-TCBUILDAGENT
+      vcenter-outputTemplate: DXC-REDIS
 fragments:
   variables1:
     vcenter-insecure: "true"
