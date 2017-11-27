@@ -14,8 +14,14 @@ templates:
     only: vmware-iso
     jsonpath:
       builders[?(@.type=='vmware-iso')].headless: true
-      builders[?(@.type=='vmware-iso')].boot_wait: 10s
+      builders[?(@.type=='vmware-iso')].boot_wait: 20s
 fragments:
+  ova-convert:
+    - inline:
+      - ovftool output-vmware-iso/rhel-7.4-vmware.vmx rhel-7.4-vmware.ova
+
+      type: shell-local
+      - ovftool 
   vcenter-upload-vars:
     vcenter-host: ''
     vcenter-cluster: ''
