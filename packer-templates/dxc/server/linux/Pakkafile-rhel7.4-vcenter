@@ -6,7 +6,7 @@ templates:
         - vcenter-upload-vars
     replace: 
       post-processors: 
-     # - vcenter-upload-post-processors
+        - vcenter-upload-post-processors
     varfiles: []
     repo: https://github.com/nucleuspoc/packer-rhel7-vms.git
     vars:
