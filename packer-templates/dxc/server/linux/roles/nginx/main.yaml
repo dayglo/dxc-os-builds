@@ -3,7 +3,7 @@
   become: true
   
   pre_tasks:
-   - name: install yum:
+   - name: install yum
      yum:
        name: python2
        state:present
