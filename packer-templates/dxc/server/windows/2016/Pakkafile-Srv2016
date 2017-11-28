@@ -1,7 +1,7 @@
 ---
 templates:
   windows_2016.json:
-   include: 
+    include: 
       variables:
         - vcenter-upload-vars
     replace: 
