@@ -13,10 +13,11 @@ templates:
       iso_url: /usr/share/pakka/rhel-server-7.4.iso
     only: vmware-iso
     jsonpath:
-      builders[?(@.type=='vmware-iso')].headless: false
+      builders[?(@.type=='vmware-iso')].headless: true
       builders[?(@.type=='vmware-iso')].boot_wait: 20s
 fragments:
   vcenter-upload-vars:
+    vcenter-vm_name : DXC-RHEL7.4
     vcenter-host: ''
     vcenter-cluster: ''
     vcenter-datacenter: ''
@@ -27,24 +28,9 @@ fragments:
     vcenter-vm_folder: ''
     vcenter-vm_network: ''
     vcenter-insecure: ''
-  vcenter-upload-post-processors:
-  - type: vsphere
-    only:
-    - vmware-iso
-    host: "{{ user `vcenter-host` }}"
-    cluster: "{{ user `vcenter-cluster` }}"
-    datacenter: "{{ user `vcenter-datacenter` }}"
-    datastore: "{{ user `vcenter-datastore` }}"
-    username: "{{ user `vcenter-username` }}"
-    password: "{{ user `vcenter-password` }}"
-    vm_name: "{{ user `vcenter-vm_name` }}"
-    disk_mode: "{{ user `vcenter-disk_mode` }}"
-    vm_folder: "{{ user `vcenter-vm_folder` }}"
-    vm_network: "{{ user `vcenter-vm_network` }}"
-    insecure: "{{ user `vcenter-insecure` }}"
   vcenter-ovftool-upload:
     - inline:
-      - ovftool --name=wwwwwwwwwwwwwwwww -ds={{ user `vcenter-datastore` }} --network="{{ user `vcenter-vm_network` }}" ./output-vmware-iso/rhel-7.4-vmware.vmx vi://{{ user `vcenter-username` }}:{{ user `vcenter-password` }}@{{ user `vcenter-host` }}/{{ user `vcenter-datacenter` }}/host/{{ user `vcenter-cluster` }}
+      - ovftool --name="{{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}" -ds={{ user `vcenter-datastore` }} --network="{{ user `vcenter-vm_network` }}" ./output-vmware-iso/rhel-7.4-vmware.vmx vi://{{ user `vcenter-username` }}:{{ user `vcenter-password` }}@{{ user `vcenter-host` }}/{{ user `vcenter-datacenter` }}/host/{{ user `vcenter-cluster` }}
       type: shell-local
 
 
