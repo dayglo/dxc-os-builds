@@ -13,6 +13,7 @@ templates:
     only: vmware-iso
     jsonpath:
       builders[?(@.type=='vmware-iso')].boot_wait: 20s
+      builders[?(@.type=='vmware-iso')].headless: true
 fragments:
   vcenter-upload-vars:
     vcenter-vm_name : ''
