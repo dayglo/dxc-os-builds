@@ -13,7 +13,7 @@ templates:
       iso_url: /usr/share/pakka/rhel-server-7.4.iso
     only: vmware-iso
     jsonpath:
-      builders[?(@.type=='vmware-iso')].headless: true
+      builders[?(@.type=='vmware-iso')].headless: false
       builders[?(@.type=='vmware-iso')].boot_wait: 20s
 fragments:
   vcenter-upload-vars:
@@ -30,11 +30,8 @@ fragments:
     vcenter-insecure: ''
   vcenter-ovftool-upload:
     - inline:
-      - "ovftool --name={{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}} -ds={{ user `vcenter-datastore` }} --network="{{ user `vcenter-vm_network` }}" ./output-vmware-iso/rhel-7.4-vmware.vmx vi://{{ user `vcenter-username` }}:{{ user `vcenter-password` }}@{{ user `vcenter-host` }}/{{ user `vcenter-datacenter` }}/host/{{ user `vcenter-cluster` }}"
+      - "ovftool --name=\"{{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}\" -ds={{ user `vcenter-datastore` }} --network=\"{{ user `vcenter-vm_network` }}\" ./output-vmware-iso/rhel-7.4-vmware.vmx vi://{{ user `vcenter-username` }}:{{ user `vcenter-password` }}@{{ user `vcenter-host` }}/{{ user `vcenter-datacenter` }}/host/{{ user `vcenter-cluster` }}"
       type: shell-local
-
-
-
 
 
 
