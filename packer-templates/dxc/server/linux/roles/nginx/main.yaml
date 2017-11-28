@@ -1,0 +1,5 @@
+---
+- hosts: default
+  become: true
+  roles:
+    - https://github.com/dayglo/ansible-role-nginx

@@ -1,0 +1,37 @@
+---
+templates:
+  "{}":
+    replace: 
+      variables: variables1
+      builders: builders1
+      provisioners: provisioners1
+    vars:
+      vcenter-inputTemplate: DXC-UBUNTU16.04-KUBERNETES
+      vcenter-outputTemplate: DXC-NGINX
+fragments:
+  variables1:
+    vcenter-insecure: "true"
+    guest_password: vagrant
+    tag : 'untagged'
+  builders1:
+    type: vsphere
+    vcenter_server: "{{ user `vcenter-host` }}"
+    username: "{{ user `vcenter-username` }}"
+    password: "{{ user `vcenter-password` }}"
+    insecure_connection: "true"
+    datacenter: "{{ user `vcenter-datacenter` }}"
+    template:  "{{ user `vcenter-inputTemplate` }}"
+    vm_name: "{{ user `vcenter-outputTemplate` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}"
+    host: "{{ user `vcenter-cluster` }}"
+    linked_clone: false
+    datastore: "{{ user `vcenter-datastore` }}"
+    ssh_username: vagrant
+    ssh_password: "{{user `guest_password`}}"
+    shutdown_command: "echo '{{user `guest_password`}}' | sudo -S shutdown -P now"
+    shutdown_timeout: 5m
+    CPUs: 2
+    RAM: 4096
+    convert_to_template: true
+  provisioners1:
+    type: ansible
+    playbook_file: ./main.yaml
