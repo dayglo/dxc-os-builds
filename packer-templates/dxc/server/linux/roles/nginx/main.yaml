@@ -1,5 +1,12 @@
 ---
 - hosts: default
   become: true
+  
+  pre_tasks:
+   - name: install yum:
+     yum:
+       name: python2
+       state:present
+  
   roles:
     - ansible-role-nginx
