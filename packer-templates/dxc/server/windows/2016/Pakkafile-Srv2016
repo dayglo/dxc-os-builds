@@ -1,11 +1,12 @@
 ---
 templates:
   windows_2016.json:
-    include:
-      - vcenter-upload-vars
-    replace:
-      post-processors:
-      - vcenter-upload-post-processor
+   include: 
+      variables:
+        - vcenter-upload-vars
+    replace: 
+      post-processors: 
+      - vcenter-ovftool-upload
     vars:
       vcenter-vm_name: DXC-WIN2016-BASE
     repo: https://github.com/dayglo/packer-windows
@@ -14,7 +15,7 @@ templates:
       builders[?(@.type=='vmware-iso')].boot_wait: 20s
 fragments:
   vcenter-upload-vars:
-    vcenter-vm_name: ''
+    vcenter-vm_name : ''
     vcenter-host: ''
     vcenter-cluster: ''
     vcenter-datacenter: ''
@@ -22,27 +23,10 @@ fragments:
     vcenter-username: ''
     vcenter-password: ''
     vcenter-disk_mode: ''
-    vcenter-vm_folder: "/platform/templates/"
+    vcenter-vm_folder: ''
     vcenter-vm_network: ''
-  vcenter-upload-post-processor:
-    type: vsphere
-    only:
-    - vmware-iso
-    host: "{{ user `vcenter-host` }}"
-    cluster: "{{ user `vcenter-cluster` }}"
-    datacenter: "{{ user `vcenter-datacenter` }}"
-    datastore: "{{ user `vcenter-datastore` }}"
-    username: "{{ user `vcenter-username` }}"
-    password: "{{ user `vcenter-password` }}"
-    vm_name: "{{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}"
-    disk_mode: "{{ user `vcenter-disk_mode` }}"
-    vm_folder: "{{ user `vcenter-vm_folder` }}"
-    vm_network: "{{ user `vcenter-vm_network` }}"
-    insecure: "{{ user `vcenter-insecure` }}"
-  ova-post-processors:
-  - inline:
-    - ovftool output-windows_2016-vmware-iso/windows_2016.vmx windows_2016.ova
-    type: shell-local
-  - files:
-    - windows_2016.ova
-    type: artifice
+    vcenter-insecure: ''
+  vcenter-ovftool-upload:
+    - inline:
+      - "ovftool --name=\"{{ user `vcenter-vm_name` }}[{{isotime \"2006:01:02:15:04:05\"}}]-{{user `tag`}}\" -ds={{ user `vcenter-datastore` }} --network=\"{{ user `vcenter-vm_network` }}\" ./output-vmware-iso/windows_2016.vmx vi://{{ user `vcenter-username` }}:{{ user `vcenter-password` }}@{{ user `vcenter-host` }}/{{ user `vcenter-datacenter` }}/host/{{ user `vcenter-cluster` }}"
+      type: shell-local
