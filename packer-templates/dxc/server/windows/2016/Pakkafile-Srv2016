@@ -12,8 +12,9 @@ templates:
     repo: https://github.com/dayglo/packer-windows
     only: vmware-iso
     jsonpath:
-      builders[?(@.type=='vmware-iso')].boot_wait: 20s
+      builders[?(@.type=='vmware-iso')].boot_wait: 25s
       builders[?(@.type=='vmware-iso')].headless: true
+      builders[?(@.type=='vmware-iso')].winrm_timeout: 4h
 fragments:
   vcenter-upload-vars:
     vcenter-vm_name : ''
